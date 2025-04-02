@@ -4,6 +4,8 @@ import pandas as pd
 from pathlib import Path
 import pickle
 import copy
+import matplotlib as mpl
+mpl.rcParams['font.sans-serif'] = 'Arial'
 
 def set_A_mat(A_norm,quad,inter,cubic=False):
 
@@ -286,9 +288,9 @@ def save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names
         A2 = doe_df.loc[:,var_names[1]].values
         A3 = doe_df.loc[:,var_names[2]].values
         A_orig = np.transpose(np.vstack((A1,A2,A3)))
-        var_labels = ['Sorbent Loading = {:.2f} wt %',
-                      'Hydrogenation Pressure [bar]',
-                      'Hydrog-\nenation\nTemp.\n[deg. C]']
+        # var_labels = ['Sorbent Loading = {:.2f} wt %',
+        #               'Hydrogenation Pressure [bar]',
+        #               'Hydrog-\nenation\nTemp.\n[deg. C]']
     if var_names[1] == 'hyd_P_bar':
         x_levels = np.arange(8,33,1)
     elif var_names[1] == 'MeOH_sel':
@@ -323,6 +325,7 @@ def save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names
         y_levels = np.arange(20,103,5)
     # y_levels = np.arange(196,256,2)
     [X_grid,Y_grid] = np.meshgrid(x_levels,y_levels)
+    # X_grid = np.fliplr(X_grid)
     X_vec = np.reshape(X_grid,(np.product(X_grid.shape)))
     Y_vec = np.reshape(Y_grid,(np.product(Y_grid.shape)))
     plt.set_cmap('turbo')
@@ -386,6 +389,7 @@ def save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names
                 fit = make_transformed_fit(fit_var,X_grid,Y_grid,A1,A2,A3,X,A_mean,A_std,b_mean,b_std,quad,inter)
                 fit = np.minimum(fit,max(levels))
                 fit = np.maximum(fit,min(levels))
+            # fit = np.fliplr(fit)
             cplot = plt.contourf(X_grid,Y_grid,fit,levels=levels)
             plt.xlabel(var_labels[1])
             plt.ylabel(var_labels[2],rotation=0)
@@ -449,7 +453,7 @@ def save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names
 
         # plt.gcf().set_tight_layout(True)
         plt.gcf().set_size_inches(12,5)
-        plt.show()
+        # plt.show()
 
     if filepath is not None:
 
@@ -495,7 +499,7 @@ if __name__ == '__main__':
     var_labels = ['Sorbent Loading = {:.2f} wt %','Hydrogenation Pressure [bar]','Hydrog-\nenation\nTemp.\n[deg. C]']
     
     save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
-               log_inc=False, plot=True, filepath=current_dir/'outputs'/'co2up')
+               log_inc=False, plot=False, filepath=current_dir/'outputs'/'co2up')
 
     
     doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
@@ -508,7 +512,7 @@ if __name__ == '__main__':
     var_labels = ['Sorbent Loading = {:.2f} wt %','Hydrogenation Pressure [bar]','Hydrog-\nenation\nTemp.\n[deg. C]']
 
     save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
-               log_inc=False, plot=True, filepath=current_dir/'outputs'/'meoh_sel')
+               log_inc=False, plot=False, filepath=current_dir/'outputs'/'meoh_sel')
 
     
     doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
@@ -601,7 +605,7 @@ if __name__ == '__main__':
     var_labels = ['Sorbent Loading = {:.2f} wt %','H2:Methanol Mass Ratio [-]','Catalyst\nMass\n[tonne]']
 
     save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
-               log_inc=False, plot=True, filepath=current_dir/'outputs'/'LCOM', transform_fit=False)#, add_df=add_pts)
+               log_inc=False, plot=False, filepath=current_dir/'outputs'/'LCOM', transform_fit=False)#, add_df=add_pts)
     
     doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
     # add_pts = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
@@ -612,23 +616,27 @@ if __name__ == '__main__':
     inter = False
     var_names = ['sorbent_wt_pct','h2_ratio','tonne_cat']
     var_names = ['sorbent_wt_pct','hyd_P_bar','hyd_T_C']
-    var_labels = ['Sorbent Loading = {:.2f} wt %','Hydrogenation Pressure [bar]','Hydrog-\nenation\nTemp.\n[deg. C]']
+    var_labels = ['a)                    5-Na/CZA Cost Correlation                           ','Hydrogenation Pressure [bar]','Hydrog-\nenation\nTemp.\n[deg. C]']
 
     save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
-               log_inc=False, plot=True, filepath=current_dir/'outputs'/'LCOM_trans', transform_fit=True)#, add_df=add_pts)
+               log_inc=False, plot=False, filepath=current_dir/'outputs'/'LCOM_trans', transform_fit=True)#, add_df=add_pts)
     
+    plt.savefig('corrs.png', dpi=300)
+
     doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
     # add_pts = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
     fit_var = 'LCOM'
     fit_label = 'Levelized Cost of Methanol (LCOM) [$/kg]\n\n\n'
     levels = np.arange(0.66,1.1,0.02)
     quad = True
-    inter = True
-    var_names = ['sorbent_wt_pct','MeOH_sel','CO2_uptake']
-    var_labels = ['Sorbent Loading = {:.2f} wt %','Methanol selectivity [%]','Strong\nCO2 uptake\n[umol/g]']
+    inter = False
+    var_names = ['sorbent_wt_pct','MeOH_sel','prod_sing']
+    var_labels = ['b)                    5-Na/CZA Performance Targets                           ','Methanol selectivity [%]','Strong\nCO2 uptake\n[umol/g]']
 
     save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
                log_inc=False, plot=True, filepath=current_dir/'outputs'/'LCOM_cat', transform_fit=False)#, add_df=add_pts)
+
+    plt.savefig('corrs_2.png', dpi=300)
 
     # doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
     # # add_pts = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')

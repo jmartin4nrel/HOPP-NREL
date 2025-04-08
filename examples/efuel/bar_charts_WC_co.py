@@ -8,8 +8,10 @@ mpl.rcParams.update(mpl.rcParamsDefault)
 
 fp = Path("C:/Users/jmartin4/OneDrive - NREL/General - FE RCC DFM Project/Task 3/RCC ASPEN Data CO Paper.xlsx")
 
+num_bars = 7
+
 df = pd.read_excel(fp,sheet_name='WC Plots 3 (3)',header=1,index_col=1)
-df = df.iloc[1:29,1:6]
+df = df.iloc[1:29,1:num_bars+1]
 df = df.fillna(0)
 
 barwidth = 0.6
@@ -20,8 +22,8 @@ mpl.rcParams['font.sans-serif']  = 'Arial'
 mpl.rcParams['font.size']  = 16
 # mpl.rcParams['text.usetex'] = True
 
-plt.figure(figsize=(6,7))
-plt.axes((.2,.13,.78,.68))
+plt.figure(figsize=(11,10))
+plt.axes((.13,.13,.85,.68))
 
 itemlist = ['Hydrogen Production',
     'Nat. Gas Production',
@@ -47,7 +49,7 @@ hatchlist = ['///',
 # colorlist = np.flipud(colorlist)
 # hatchlist = np.flipud(hatchlist)
 
-total = np.zeros(5)
+total = np.zeros(num_bars)
 
 for idx, item in enumerate(itemlist): 
     data = df.loc[item]
@@ -59,12 +61,12 @@ for idx, item in enumerate(itemlist):
     # else:
     #     modifier = .5-barwidth
     #     bottoms = total
-    # if idx == 2:
-    #     itemlabel = 'Hydrogen'
+    if idx == 3:
+        itemlabel = 'Methanol Reactor'
     # elif idx == 3:
     #     itemlabel = 'Natural Gas'
-    # else:
-    itemlabel = item
+    else:
+        itemlabel = item
     modifier = .5-barwidth/2
     plt.bar(np.arange(0,df.shape[1])+modifier,
             height=data.values,
@@ -91,22 +93,22 @@ for idx, item in enumerate(total):
     xlabel = plt.text(idx+.5,-.2,df.columns.values[idx],fontsize=12,
                       horizontalalignment='center',verticalalignment='top')
 
-# plt.grid('on')
-plt.ylim([0,16])
+plt.grid('on')
+plt.ylim([0,18])
 plt.xlabel
 plt.tick_params(length=8)
-plt.xlim([0,3])
+plt.xlim([0,num_bars])
 ax = plt.gca()
-xtick_labels = [' \n ']*4
-ax.set_xticks(np.arange(0,4))
-ax.set_yticks(np.arange(0,17,1))
+xtick_labels = [' \n ']*(num_bars+1)
+ax.set_xticks(np.arange(0,(num_bars+1)))
+ax.set_yticks(np.arange(0,19,2))
 ax.set_xlabel('Methanol Production Process',labelpad=16)
 plt.ylabel('Water Consumption (WC)\n(kg-H$_2$O/kg-methanol)')
 labels = ax.set_xticklabels(xtick_labels,horizontalalignment='center',fontsize=12)
 # for idx, label in enumerate(labels):
 #     label_y = label.get_position()[1]
 #     label.set_position((idx+.5,label_y))
-L = plt.legend(bbox_to_anchor=(1.02, 1.25),ncol=2,edgecolor='k')
+L = plt.legend(bbox_to_anchor=(1, 1.15),ncol=3,edgecolor='k')
 L.set_alpha(0)
 # plt.show()
 plt.savefig('Bar_chart_mpl_wc_co.png',dpi=300)

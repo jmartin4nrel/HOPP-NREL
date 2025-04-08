@@ -8,8 +8,10 @@ mpl.rcParams.update(mpl.rcParamsDefault)
 
 fp = Path("C:/Users/jmartin4/OneDrive - NREL/General - FE RCC DFM Project/Task 3/RCC ASPEN Data CO Paper.xlsx")
 
-df = pd.read_excel(fp,sheet_name='CI Plots 3 (3)',header=1,index_col=1)
-df = df.iloc[1:29,1:6]
+num_bars = 7
+
+df = pd.read_excel(fp,sheet_name='CI Plots 3 (4)',header=1,index_col=1)
+df = df.iloc[1:29,1:num_bars+1]
 df = df.fillna(0)
 
 barwidth = 0.6
@@ -20,10 +22,11 @@ mpl.rcParams['font.sans-serif']  = 'Arial'
 mpl.rcParams['font.size']  = 16
 # mpl.rcParams['text.usetex'] = True
 
-plt.figure(figsize=(6,7))
-plt.axes((.2,.13,.78,.68))
+plt.figure(figsize=(11,10))
+plt.axes((.13,.13,.85,.68))
 
 itemlist = [
+    'Reactor Direct CO$_2$',
     'Hydrogen Production',
     'Nat. Gas Production',
     'CO$_2$ Capture',
@@ -31,6 +34,7 @@ itemlist = [
     'Reactor Other',]
 
 colorlist = [
+             [1,    0,    0],
              [0,    0.8,    0],
              [0.25,    .75,      1],
              [0.5,  0.25,   0],
@@ -38,6 +42,7 @@ colorlist = [
              [0.5,  0.5,    0.5],]
 
 hatchlist = [
+             '',
              '///',
              '\\\\\\',
              '',
@@ -53,7 +58,7 @@ hatchlist = [
 # colorlist = np.flipud(colorlist)
 # hatchlist = np.flipud(hatchlist)
 
-total = np.zeros(5)
+total = np.zeros(num_bars)
 
 for idx, item in enumerate(itemlist): 
     data = df.loc[item]
@@ -97,22 +102,22 @@ for idx, item in enumerate(total):
     xlabel = plt.text(idx+.5,-.02,df.columns.values[idx],fontsize=12,
                       horizontalalignment='center',verticalalignment='top')
 
-# plt.grid('on')
-plt.ylim([0,0.65])
+plt.grid('on')
+plt.ylim([0,2])
 plt.xlabel
 plt.tick_params(length=8)
-plt.xlim([0,3])
+plt.xlim([0,num_bars])
 ax = plt.gca()
-xtick_labels = [' \n ']*4
-ax.set_xticks(np.arange(0,4))
-ax.set_yticks(np.arange(0,0.7,.1))
+xtick_labels = [' \n ']*(num_bars+1)
+ax.set_xticks(np.arange(0,(num_bars+1)))
+ax.set_yticks(np.arange(0,2.1,.2))
 ax.set_xlabel('Methanol Production Process',labelpad=16)
 plt.ylabel('Carbon Intensity (CI)\n(kg-CO$_2$e/kg-methanol)')
 labels = ax.set_xticklabels(xtick_labels,horizontalalignment='center',fontsize=12)
 # for idx, label in enumerate(labels):
 #     label_y = label.get_position()[1]
 #     label.set_position((idx+.5,label_y))
-L = plt.legend(bbox_to_anchor=(1.02, 1.3),ncol=2,edgecolor='k')
+L = plt.legend(bbox_to_anchor=(1, 1.15),ncol=3,edgecolor='k')
 L.set_alpha(0)
 # plt.show()
 plt.savefig('Bar_chart_mpl_ci_co.png',dpi=300)

@@ -8,7 +8,7 @@ mpl.rcParams.update(mpl.rcParamsDefault)
 
 fp = Path("C:/Users/jmartin4/OneDrive - NREL/General - FE RCC DFM Project/Task 3/RCC ASPEN Data CO Paper.xlsx")
 
-num_bars = 6
+num_bars = 7
 
 df = pd.read_excel(fp,sheet_name='LCOM Plots (5)',header=1,index_col=1)
 df = df.iloc[1:29,1:num_bars+1]
@@ -22,7 +22,7 @@ mpl.rcParams['font.sans-serif']  = 'Arial'
 mpl.rcParams['font.size']  = 16
 # mpl.rcParams['text.usetex'] = True
 
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(11,10))
 plt.axes((.13,.11,.85,.68))
 
 itemlist = [
@@ -113,14 +113,14 @@ for idx, item in enumerate(total):
     # else:
     t = plt.text(idx+.5,item+.05,"${:.2f}".format(item),ha='center',
                 bbox=dict(boxstyle="square",ec='k',fc='w',))
-    if idx < 3:
+    if idx < 7:
         xlabel = plt.text(idx+.5,-.12,df.columns.values[idx],fontsize=12,
                         horizontalalignment='center',verticalalignment='top')
     else:
         xlabel = plt.text(idx+.5,-.12,df.columns.values[idx][:-2],fontsize=12,
                       horizontalalignment='center',verticalalignment='top')
 
-# plt.grid('on')
+plt.grid('on')
 plt.ylim([-.1,1.0])
 plt.xlabel
 plt.tick_params(length=8)

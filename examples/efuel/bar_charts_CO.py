@@ -116,7 +116,7 @@ for idx, item in enumerate(total):
     xlabel = plt.text(idx+.5,-.12,df.columns.values[idx],fontsize=12,
                       horizontalalignment='center',verticalalignment='top')
 
-# plt.grid('on')
+plt.grid('on')
 plt.ylim([-.1,1.0])
 plt.xlabel
 plt.tick_params(length=8)

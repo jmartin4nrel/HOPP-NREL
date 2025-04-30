@@ -28,7 +28,7 @@ plt.axes((.13,.13,.85,.68))
 itemlist = ['Hydrogen Production',
     'Nat. Gas Production',
     'CO$_2$ Capture',
-    'Reactor Other',]
+    'MeOH Production',]
 
 colorlist = [[0,    0.8,    0],
              [0.25,    .75,      1],
@@ -61,12 +61,12 @@ for idx, item in enumerate(itemlist):
     # else:
     #     modifier = .5-barwidth
     #     bottoms = total
-    if idx == 3:
-        itemlabel = 'Methanol Reactor'
+    # if idx == 3:
+    #     itemlabel = 'Methanol Reactor'
     # elif idx == 3:
     #     itemlabel = 'Natural Gas'
-    else:
-        itemlabel = item
+    # else:
+    itemlabel = item
     modifier = .5-barwidth/2
     plt.bar(np.arange(0,df.shape[1])+modifier,
             height=data.values,
@@ -90,7 +90,11 @@ for idx, item in enumerate(itemlist):
 for idx, item in enumerate(total):
     t = plt.text(idx+.5,item+.5,"{:.1f}".format(item),ha='center',
                  bbox=dict(boxstyle="square",ec='k',fc='w',))
-    xlabel = plt.text(idx+.5,-.2,df.columns.values[idx],fontsize=12,
+    if idx < 4:
+        xlabel = plt.text(idx+.5,-.2,df.columns.values[idx],fontsize=12,
+                        horizontalalignment='center',verticalalignment='top')
+    else:
+        xlabel = plt.text(idx+.5,-.2,df.columns.values[idx][:-2],fontsize=12,
                       horizontalalignment='center',verticalalignment='top')
 
 plt.grid('on')

@@ -9,7 +9,7 @@ mpl.rcParams.update(mpl.rcParamsDefault)
 fp = Path("C:/Users/jmartin4/OneDrive - NREL/General - FE RCC DFM Project/Task 3/RCC ASPEN Data Final Paper.xlsx")
 
 df = pd.read_excel(fp,sheet_name='LCOM Plots (4)',header=1,index_col=1)
-df = df.iloc[1:29,1:6]
+df = df.iloc[1:29,1:7]
 df = df.fillna(0)
 
 barwidth = 0.3
@@ -66,7 +66,7 @@ hatchlist = ['',
 # colorlist = np.flipud(colorlist)
 # hatchlist = np.flipud(hatchlist)
 
-total = np.zeros(5)
+total = np.zeros(6)
 
 for idx, item in enumerate(itemlist): 
     data = df.loc[item]
@@ -113,10 +113,10 @@ for idx, item in enumerate(total):
 plt.ylim([-.1,1.2])
 plt.xlabel
 plt.tick_params(length=8)
-plt.xlim([0,5])
+plt.xlim([0,6])
 ax = plt.gca()
-xtick_labels = [' \n ']*6
-ax.set_xticks(np.arange(0,6))
+xtick_labels = [' \n ']*7
+ax.set_xticks(np.arange(0,7))
 ax.set_yticks(np.arange(-.1,1.3,.1))
 plt.xlabel('Methanol Production Process')
 plt.ylabel('Levelized cost of methanol (LCOM)\n($/kg-methanol)')

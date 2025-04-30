@@ -113,7 +113,7 @@ for idx, item in enumerate(total):
     # else:
     t = plt.text(idx+.5,item+.05,"${:.2f}".format(item),ha='center',
                 bbox=dict(boxstyle="square",ec='k',fc='w',))
-    if idx < 7:
+    if idx < 4:
         xlabel = plt.text(idx+.5,-.12,df.columns.values[idx],fontsize=12,
                         horizontalalignment='center',verticalalignment='top')
     else:

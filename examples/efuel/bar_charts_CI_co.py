@@ -26,12 +26,12 @@ plt.figure(figsize=(11,10))
 plt.axes((.13,.13,.85,.68))
 
 itemlist = [
-    'Reactor Direct CO$_2$',
+    'MeOH Production Direct CO$_2$e',
     'Hydrogen Production',
     'Nat. Gas Production',
     'CO$_2$ Capture',
-    'Reactor Electricity',
-    'Reactor Other',]
+    'MeOH Production Electricity',
+    'MeOH Production Indirect CO$_2$e',]
 
 colorlist = [
              [1,    0,    0],
@@ -99,7 +99,11 @@ for idx, item in enumerate(itemlist):
 for idx, item in enumerate(total):
     t = plt.text(idx+.5,item+.05,"{:.2f}".format(item),ha='center',
                  bbox=dict(boxstyle="square",ec='k',fc='w',))
-    xlabel = plt.text(idx+.5,-.02,df.columns.values[idx],fontsize=12,
+    if idx < 4:
+        xlabel = plt.text(idx+.5,-.02,df.columns.values[idx],fontsize=12,
+                        horizontalalignment='center',verticalalignment='top')
+    else:
+        xlabel = plt.text(idx+.5,-.02,df.columns.values[idx][:-2],fontsize=12,
                       horizontalalignment='center',verticalalignment='top')
 
 plt.grid('on')
@@ -117,7 +121,7 @@ labels = ax.set_xticklabels(xtick_labels,horizontalalignment='center',fontsize=1
 # for idx, label in enumerate(labels):
 #     label_y = label.get_position()[1]
 #     label.set_position((idx+.5,label_y))
-L = plt.legend(bbox_to_anchor=(1, 1.15),ncol=3,edgecolor='k')
+L = plt.legend(bbox_to_anchor=(1, 1.2),ncol=2,edgecolor='k')
 L.set_alpha(0)
 # plt.show()
 plt.savefig('Bar_chart_mpl_ci_co.png',dpi=300)

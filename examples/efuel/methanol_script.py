@@ -119,10 +119,10 @@ if __name__ == '__main__':
     reactor = 'CO2 hydrogenation'
     reactor = 'RCC DoE'
     # reactor = 'CO RCC'
-    # reactor = 'SMR'
+    reactor = 'SMR'
     # catalyst = 'ZA-Z'
     catalyst = 'None'
-    catalyst = 'Case 2b'
+    # catalyst = 'Case 2b'
     # catalyst = "CZA"
 
     reactor_df = pd.read_csv('inputs/Reactor_inputs_doe.csv')
@@ -168,13 +168,13 @@ if __name__ == '__main__':
     ### Run optimization on the e-fuel cost
     
 
-    # # One instance
+    # One instance
 
-    # start = time.time()
-    # calculate_efuel_cost(main_path, turndown_path, fuel, reactor, catalyst, 100, 0, dollar_year, startup_year, lat, lon, state,
-    #                      True, False, False)#, 42.4683794096513, 24.91935255018996)
-    # stop = time.time()
-    # print("Elapsed Time: {:.1f} seconds".format(stop-start))
+    start = time.time()
+    calculate_efuel_cost(main_path, turndown_path, fuel, reactor, catalyst, 100, 0, dollar_year, startup_year, lat, lon, state,
+                         True, False, False)#, 42.4683794096513, 24.91935255018996)
+    stop = time.time()
+    print("Elapsed Time: {:.1f} seconds".format(stop-start))
     
     ## List
 

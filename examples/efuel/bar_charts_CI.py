@@ -20,14 +20,14 @@ mpl.rcParams['font.sans-serif']  = 'Arial'
 mpl.rcParams['font.size']  = 16
 # mpl.rcParams['text.usetex'] = True
 
-plt.figure(figsize=(6,10))
-plt.axes((.2,.1,.78,.68))
+plt.figure(figsize=(5,6))
+plt.axes((.21,.12,.78,.6))
 
-itemlist = ['Reactor Direct CO$_2$',
-    'Hydrogen Production',
-    'Nat. Gas Production',
+itemlist = ['Direct CO$_2$',
+    'H$_2$ Production',
+    'NG Production',
     'CO$_2$ Capture',
-    'Reactor Electricity',
+    'Reactor Elec.',
     'Reactor Other',]
 
 colorlist = [[1,    0,      0],
@@ -85,12 +85,12 @@ for idx, item in enumerate(itemlist):
     total = np.add(total,data.values)
     if idx == 1:
         ratios = df.loc['H2:MeOH Ratio']
-        for r_idx, ratio in enumerate(ratios):
-            if r_idx>0:
-                plt.text(r_idx+modifier+barwidth/2,total[r_idx]-data.values[r_idx]/2,
-                        'H$_2$:\nMeOH\nRatio=\n{:.3f}'.format(ratio),
-                        bbox=dict(boxstyle="square",fc='w',ec=None),
-                        horizontalalignment='center',verticalalignment='center')
+        # for r_idx, ratio in enumerate(ratios):
+        #     if r_idx>0:
+        #         plt.text(r_idx+modifier+barwidth/2,total[r_idx]-data.values[r_idx]/2,
+        #                 'H$_2$:\nMeOH\nRatio=\n{:.3f}'.format(ratio),
+        #                 bbox=dict(boxstyle="square",fc='w',ec=None),
+        #                 horizontalalignment='center',verticalalignment='center')
 for idx, item in enumerate(total):
     t = plt.text(idx+.5,item+.05,"{:.2f}".format(item),ha='center',
                  bbox=dict(boxstyle="square",ec='k',fc='w',))
@@ -112,7 +112,8 @@ labels = ax.set_xticklabels(xtick_labels,horizontalalignment='center',fontsize=1
 # for idx, label in enumerate(labels):
 #     label_y = label.get_position()[1]
 #     label.set_position((idx+.5,label_y))
-L = plt.legend(bbox_to_anchor=(1.02, 1.25),ncol=2,edgecolor='k')
+L = plt.legend(bbox_to_anchor=(1.02, 1.4),ncol=2,edgecolor='k')
 L.set_alpha(0)
+plt.grid("on")
 # plt.show()
 plt.savefig('Bar_chart_mpl_ci.png',dpi=300)

@@ -9,7 +9,7 @@ mpl.rcParams.update(mpl.rcParamsDefault)
 fp = Path("C:/Users/jmartin4/OneDrive - NREL/General - FE RCC DFM Project/Task 3/RCC ASPEN Data Final Paper.xlsx")
 
 df = pd.read_excel(fp,sheet_name='LCOM Plots (4)',header=1,index_col=1)
-df = df.iloc[1:29,1:7]
+df = df.iloc[1:29,1:8]
 df = df.fillna(0)
 
 barwidth = 0.3
@@ -20,8 +20,8 @@ mpl.rcParams['font.sans-serif']  = 'Arial'
 mpl.rcParams['font.size']  = 16
 # mpl.rcParams['text.usetex'] = True
 
-plt.figure(figsize=(10,10))
-plt.axes((.13,.1,.85,.68))
+plt.figure(figsize=(10,6))
+plt.axes((.13,.12,.85,.63))
 
 itemlist = ['Electricity Credits',
     'Steam Credits',
@@ -66,7 +66,7 @@ hatchlist = ['',
 # colorlist = np.flipud(colorlist)
 # hatchlist = np.flipud(hatchlist)
 
-total = np.zeros(6)
+total = np.zeros(7)
 
 for idx, item in enumerate(itemlist): 
     data = df.loc[item]
@@ -101,22 +101,22 @@ for idx, item in enumerate(itemlist):
             if r_idx>0:
                 plt.text(r_idx+modifier+barwidth/2,total[r_idx]-data.values[r_idx]/2,
                         'H$_2$:\nMeOH\nRatio=\n{:.3f}'.format(ratio),
-                        bbox=dict(boxstyle="square",fc='w',ec=None),
+                        bbox=dict(boxstyle="square",fc='w',ec=None,alpha=0.75),
                         horizontalalignment='center',verticalalignment='center')
 for idx, item in enumerate(total):
-    t = plt.text(idx+.5,item+.05,"${:.2f}".format(item),ha='center',
+    t = plt.text(idx+.5,item+.07,"${:.2f}".format(item),ha='center',
                  bbox=dict(boxstyle="square",ec='k',fc='w',))
     xlabel = plt.text(idx+.5,-.12,df.columns.values[idx],fontsize=12,
                       horizontalalignment='center',verticalalignment='top')
 
 # plt.grid('on')
-plt.ylim([-.1,1.2])
+plt.ylim([-.1,1.25])
 plt.xlabel
 plt.tick_params(length=8)
-plt.xlim([0,6])
+plt.xlim([0,7])
 ax = plt.gca()
-xtick_labels = [' \n ']*7
-ax.set_xticks(np.arange(0,7))
+xtick_labels = [' \n ']*8
+ax.set_xticks(np.arange(0,8))
 ax.set_yticks(np.arange(-.1,1.3,.1))
 plt.xlabel('Methanol Production Process')
 plt.ylabel('Levelized cost of methanol (LCOM)\n($/kg-methanol)')
@@ -124,7 +124,8 @@ labels = ax.set_xticklabels(xtick_labels,horizontalalignment='center',fontsize=1
 # for idx, label in enumerate(labels):
 #     label_y = label.get_position()[1]
 #     label.set_position((idx+.5,label_y))
-L = plt.legend(bbox_to_anchor=(1, 1.25),ncol=3,edgecolor='k')
+L = plt.legend(bbox_to_anchor=(1, 1.4),ncol=3,edgecolor='k')
 L.set_alpha(0)
+plt.grid("on")
 # plt.show()
 plt.savefig('Bar_chart_mpl.png',dpi=300)

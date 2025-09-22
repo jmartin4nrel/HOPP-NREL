@@ -607,21 +607,23 @@ if __name__ == '__main__':
     save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
                log_inc=False, plot=False, filepath=current_dir/'outputs'/'LCOM', transform_fit=False)#, add_df=add_pts)
     
-    doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
-    # add_pts = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
-    fit_var = 'LCOM'
-    fit_label = 'Levelized Cost of Methanol (LCOM) [$/kg]\n\n\n'
-    levels = np.arange(0.66,1.1,0.02)
-    quad = True
-    inter = False
-    var_names = ['sorbent_wt_pct','h2_ratio','tonne_cat']
-    var_names = ['sorbent_wt_pct','hyd_P_bar','hyd_T_C']
-    var_labels = ['a)                    5-Na/CZA Cost Correlation                           ','Hydrogenation Pressure [bar]','Hydrog-\nenation\nTemp.\n[deg. C]']
+    ## Uncomment section below to get first part of figure
 
-    save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
-               log_inc=False, plot=False, filepath=current_dir/'outputs'/'LCOM_trans', transform_fit=True)#, add_df=add_pts)
+    # doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
+    # # add_pts = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
+    # fit_var = 'LCOM'
+    # fit_label = 'Levelized Cost of Methanol (LCOM) [$/kg]\n\n\n'
+    # levels = np.arange(0.66,1.1,0.02)
+    # quad = True
+    # inter = False
+    # var_names = ['sorbent_wt_pct','h2_ratio','tonne_cat']
+    # var_names = ['sorbent_wt_pct','hyd_P_bar','hyd_T_C']
+    # var_labels = ['a)                    5-Na/CZA Cost Correlation                           ','Hydrogenation Pressure [bar]','Hydrog-\nenation\nTemp.\n[deg. C]']
+
+    # save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
+    #            log_inc=False, plot=True, filepath=current_dir/'outputs'/'LCOM_trans', transform_fit=True)#, add_df=add_pts)
     
-    plt.savefig('corrs.png', dpi=300)
+    # plt.savefig('corrs.svg', dpi=300)
 
     doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
     # add_pts = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
@@ -630,13 +632,13 @@ if __name__ == '__main__':
     levels = np.arange(0.66,1.1,0.02)
     quad = True
     inter = False
-    var_names = ['sorbent_wt_pct','MeOH_sel','prod_sing']
+    var_names = ['sorbent_wt_pct','MeOH_sel','CO2_uptake']
     var_labels = ['b)                    5-Na/CZA Performance Targets                           ','Methanol selectivity [%]','Strong\nCO2 uptake\n[umol/g]']
 
     save_corrs(title, doe_df, fit_var, fit_label, levels, quad, inter, var_names, var_labels,
                log_inc=False, plot=True, filepath=current_dir/'outputs'/'LCOM_cat', transform_fit=False)#, add_df=add_pts)
 
-    plt.savefig('corrs_2.png', dpi=300)
+    plt.savefig('corrs_2.svg', dpi=300)
 
     # doe_df = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')
     # # add_pts = pd.read_csv(current_dir/'inputs'/'doe_inputs_adj.csv')

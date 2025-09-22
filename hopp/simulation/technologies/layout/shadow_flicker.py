@@ -8,7 +8,7 @@ from shapely.affinity import translate
 from shapely.geometry import Point
 from shapely.geometry import Polygon, MultiPolygon, MultiPoint
 from shapely.ops import unary_union
-import timezonefinder
+# import timezonefinder
 from pysolar.solar import *
 from pvmismatch import *
 
